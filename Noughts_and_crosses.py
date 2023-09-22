@@ -4,11 +4,34 @@ Noughts_and_crosses.title("Noughts and crosses")
 point1 = 0
 point2 = 0
 turn = 0
-who_win = ""
+def restart():
+	global turn
+	for i in range(1,10):
+		button = eval("B"+str(i))
+		button["text"] = ""
+		button["state"] = tk.NORMAL
+		turn = 0
+def check_winner():
+	global point1
+	global point2
+	if B1["text"] == B2["text"] == B3["text"] == "X" or B4["text"] == B5["text"] == B6["text"] == "X" or B7["text"] == B8["text"] == B9["text"] == "X" or B1["text"] == B4["text"] == B7["text"] == "X" or B2["text"] == B5["text"] == B8["text"] == "X" or B3["text"] == B6["text"] == B9["text"] == "X" or B1["text"] == B5["text"] == B9["text"] == "X" or B3["text"] == B5["text"] == B7["text"] == "X":
+			point1 = point1 + 1
+			result1["text"] = point1
+			win["text"] = "Player 1 win"
+			restart()
+	elif B1["text"] == B2["text"] == B3["text"] == "O" or B4["text"] == B5["text"] == B6["text"] == "O" or B7["text"] == B8["text"] == B9["text"] == "O" or B1["text"] == B4["text"] == B7["text"] == "O" or B2["text"] == B5["text"] == B8["text"] == "O" or B3["text"] == B6["text"] == B9["text"] == "O" or B1["text"] == B5["text"] == B9["text"] == "O" or B3["text"] == B5["text"] == B7["text"] == "O":
+			point2 = point2 + 1
+			result2["text"] = point2
+			win["text"] = "Player 2 win"
+			restart()
+	elif B1["text"] != "" and  B2["text"] != "" and B3["text"] != "" and B4["text"] != "" and B5["text"] != "" and B6["text"] != "" and B7["text"] != "" and B8["text"] != "" and B9["text"] != "":
+			win["text"] = "draw"
+			restart()
 def B(card):
 	global turn
 	global who_win 
 	global point1
+	global point2 
 	if turn == 0:
 		button = eval("B" + str(card))
 		button ["text"] = "X"
@@ -19,8 +42,7 @@ def B(card):
 		button ["text"] = "O"
 		button["state"] = tk.DISABLED
 		turn = 0 
-	 
-		
+	check_winner()
 Player_1 = tk.Label(Noughts_and_crosses, text = "Player 1:")
 Player_1.grid(row = 0, column = 0, columnspan = 2, padx = 1, pady = 1)
 Player_2 = tk.Label(Noughts_and_crosses, text = "Player 2:")
@@ -47,6 +69,8 @@ B8 = tk.Button(Noughts_and_crosses, text = "",width = 10, height = 4, command = 
 B8.grid(row = 4, column = 1,  padx = 1, pady = 1)
 B9 = tk.Button(Noughts_and_crosses, text = "",width = 10, height = 4, command = lambda:B(9))
 B9.grid(row = 4, column = 2,  padx = 1, pady = 1)
-win = tk.Label(Noughts_and_crosses, text = who_win)
+win = tk.Label(Noughts_and_crosses, text = "")
 win.grid(row = 5, column = 1, padx = 1, pady = 1)
+Brestart = tk.Button(Noughts_and_crosses, text="Restart", command = restart) 
+Brestart.grid(row=5, column=2)
 Noughts_and_crosses.mainloop()
